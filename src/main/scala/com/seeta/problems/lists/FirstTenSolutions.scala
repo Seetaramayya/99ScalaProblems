@@ -63,7 +63,10 @@ object FirstTenSolutions {
    * @return size of list
    */
   def length[T] (list: List[T]): Int = {
-    list.length
+    list match {
+      case Nil => 0
+      case x :: xs => 1 + length(xs)
+    }
   }
 
   /**
@@ -73,8 +76,12 @@ object FirstTenSolutions {
    * @return reversed list
    */
   def reverse[T] (list: List[T]): List[T] = {
-    // list.reverse
-    (list foldLeft List[T]())((xs, x) => x :: xs)
+    // list.reverse (too easy)
+    // (list foldLeft List[T]())((xs, x) => x :: xs) is okay
+    list match {
+      case Nil => Nil
+      case x :: xs => reverse(xs) :+ x //still using List method
+    }
   }
 
   /**
@@ -84,8 +91,8 @@ object FirstTenSolutions {
    * @return true if given list is palindrome otherwise false
    */
   def isPalindrome[T](list: List[T]): Boolean = {
-    val reverse = list.reverse
-    list == reverse
+    val reversed = reverse(list)
+    list == reversed
   }
 
   /**
@@ -95,12 +102,11 @@ object FirstTenSolutions {
    */
   def flatten(list: List[Any]):List[Any] = {
     def recursive(l: List[Any]):List[Any] = {
-      val r = l.foldRight(List[Any]())((x, xs) => x match {
-        case ys: List[Any] => ys ::: xs
-        case y: Any => x :: xs
-      })
-
-      if (r.exists(x => x.isInstanceOf[List[Any]])) recursive(r) else r
+      l match {
+        case (x :List[Any]) :: xs => recursive(x) ::: recursive(xs)
+        case x :: xs => x :: recursive(xs)
+        case Nil => Nil
+      }
     }
     recursive(list)
   }

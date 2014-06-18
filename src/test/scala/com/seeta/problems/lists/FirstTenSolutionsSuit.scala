@@ -77,6 +77,6 @@ class FirstTenSolutionsSuit extends FunSuite {
   }
 
   test("flatten: ") {
-    assert(flatten(List(List(1, 1), 2, List(3, List(5, 8)))) === List(1, 1, 2, 3, 5, 8))
+    assert(flatten(List(List(1, 1), 2, List(3, List(List(5), 8)))) === List(1, 1, 2, 3, 5, 8))
   }
 }
