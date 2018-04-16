@@ -79,4 +79,8 @@ class FirstTenSolutionsSuit extends FunSuite {
   test("flatten: ") {
     assert(flatten(List(List(1, 1), 2, List(3, List(List(5), 8)))) === List(1, 1, 2, 3, 5, 8))
   }
+
+  test("compress: ") {
+    assert(compress(List('a, 'a, 'a, 'a, 'b, 'c, 'c, 'a, 'a, 'd, 'e, 'e, 'e, 'e)) === List('a, 'b, 'c, 'a, 'd, 'e))
+  }
 }

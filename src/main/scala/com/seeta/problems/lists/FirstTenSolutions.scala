@@ -110,4 +110,42 @@ object FirstTenSolutions {
     }
     recursive(list)
   }
+
+  /**
+   * P 08. Eliminate consecutive duplicates of list elements.
+   */
+  def compress[T](list: List[T]): List[T] = {
+    list.foldRight(List[T]()) {
+      case (elem, List()) => elem :: Nil
+      case (elem, acc) if acc.head == elem => acc
+      case (elem, acc) => elem :: acc
+    }
+  }
+
+  /**
+    * P 09. Eliminate consecutive duplicates of list elements.
+    *
+    * If a list contains repeated elements they should be placed in separate sublists.
+    */
+  def pack[T](input: List[T]): List[List[T]] = {
+    input.foldRight(List(List[T]())) {
+      case (elem, List(List()))                 => List(List(elem))
+      case (elem, acc) if acc.head.head == elem => (elem :: acc.head) :: acc.tail
+      case (elem, acc)                          => List(elem) :: acc
+    }
+  }
+
+  /**
+    * P 10. Run-length encoding of a list.
+    *
+    * Use the result of problem P09 to implement the so-called run-length encoding data compression method.
+    * Consecutive duplicates of elements are encoded as tuples (N, E) where N is the number of duplicates
+    * of the element E.
+    */
+  def encode[T](input: List[T]): List[(Int, T)] = {
+    if (input.isEmpty) throw new IllegalArgumentException("input should be NEL (non empty list)")
+    else {
+      pack(input).map(innerList => (innerList.size, innerList.head))
+    }
+  }
 }
