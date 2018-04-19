@@ -4,8 +4,8 @@ import com.seeta.problems.lists.P13.encodeDirect
 import org.scalatest.{Matchers, WordSpec}
 
 class P13Spec extends WordSpec with Matchers {
-  "Decode" should {
-    "reverse of encode of P10" in {
+  "EncodeDirect" should {
+    "encode run-length encoding data compression method" in {
       encodeDirect(List()) shouldBe List()
       encodeDirect(List('a)) shouldBe List((1, 'a))
       encodeDirect(List('a, 'a)) shouldBe List((2, 'a))
