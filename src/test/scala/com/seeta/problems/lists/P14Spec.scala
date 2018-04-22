@@ -2,18 +2,19 @@ package com.seeta.problems.lists
 
 import com.seeta.problems.lists.P14.duplicate
 import org.scalatest.{Matchers, WordSpec}
+import org.scalatest.prop.PropertyChecks
 
-class P14Spec extends WordSpec with Matchers {
+class P14Spec extends WordSpec with PropertyChecks with Matchers {
   "Duplicate" should {
-    "duplicate each element" in {
-      duplicate(List()) shouldBe List()
-      duplicate(List(1)) shouldBe List(1, 1)
-      duplicate(List(1, 2)) shouldBe List(1, 1, 2, 2)
-      duplicate(List("Seeta")) shouldBe List("Seeta", "Seeta")
-
-      val input = List('a, 'b, 'b, 'c, 'd)
-      val expected = List('a, 'a, 'b, 'b, 'b, 'b, 'c, 'c, 'd, 'd)
-      duplicate(input) shouldBe expected
+    "hold the property for every list" in {
+      forAll { (input: List[Int]) =>
+        val output = duplicate(input)
+        val filteredOutput = output.grouped(2).filterNot {
+          case x :: y :: Nil => x == y
+          case _ => fail("undesired state, only 2 elements lists should produce")
+        }
+        assert(filteredOutput.isEmpty)
+      }
     }
   }
 }
